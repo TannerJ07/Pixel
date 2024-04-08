@@ -10,14 +10,6 @@ local elementTable = {
 }
 
 
---------- Dont Alter -------------
-
-
-
-
-
-
-
 
 function MoveParticle(smallGrid)
     return elementTable[smallGrid[2][2]](smallGrid)
