@@ -92,3 +92,46 @@ function MoveSteam(smallGrid)
     end
     return newGrid
 end
+
+local elementTable = {
+    air = nil,
+    sand = MoveSand,
+    water = MoveWater,
+    fire =  MoveFire,
+    steam = MoveSteam,
+    border = nil
+}
+
+local elementColors = {
+    air = {0,0,0},
+    sand = {.9,.7,.3},
+    water = {0,0,1},
+    fire = {0.9,0.2,0},
+    steam = {0.5,0.5,0.5},
+    border = {.8,0,1}
+}
+
+function GetColor(element)
+    return elementColors[element]
+end
+
+
+function MoveParticle(smallGrid)
+    return elementTable[smallGrid[2][2]](smallGrid)
+end
+
+function CheckNoRules(element)
+    if elementTable[element]then
+        return true
+    end
+end
+
+function Immovable(grid)
+    return grid
+end
+
+function EmptyGrid()
+    return {{"*","*","*"},
+            {"*","*","*"},
+            {"*","*","*"}}
+end

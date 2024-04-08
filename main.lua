@@ -13,7 +13,6 @@ local element = "sand"
 function love.load()
     require "grid-manager"
     require "particle-rules"
-    require "rule-controller"
 
     grid = InitiateGrid(gridWidth,gridHeight,cellSize)
 end
@@ -62,14 +61,6 @@ function love.keypressed(key)
 end
 
 function love.draw()
-    local elementColors = {
-        air = {0,0,0},
-        sand = {.9,.7,.3},
-        water = {0,0,1},
-        fire = {0.9,0.2,0},
-        steam = {0.5,0.5,0.5},
-        border = {.8,0,1}
-    }
 
 
     DrawGrid(grid,cellSize,elementColors)

@@ -51,7 +51,7 @@ end
 function  DrawGrid(grid,cellSize,elementColors)
     for i = 1,#grid do
         for j = 1,#grid[1] do
-            love.graphics.setColor(elementColors[grid[i][j]])
+            love.graphics.setColor(GetColor(grid[i][j]))
             love.graphics.rectangle("fill",(i-1)*cellSize,(j-1)*cellSize,cellSize,cellSize)
         end
     end
