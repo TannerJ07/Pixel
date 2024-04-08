@@ -53,10 +53,21 @@ function love.keypressed(key)
         element = keyCodes[tonumber(key)]
     end
     if key == "=" then
-        mouseSize = mouseSize+1
+        if love.keyboard.isDown("backspace") then
+            mouseSize = mouseSize+5
+        else
+            mouseSize =mouseSize+1
+        end
     end
-    if key == "-" and mouseSize ~= 1 then
-        mouseSize = mouseSize-1
+    if key == "-" and mouseSize then
+        if love.keyboard.isDown("backspace") then
+            mouseSize = mouseSize-5
+        else
+            mouseSize =mouseSize-1
+        end
+        if mouseSize < 1 then
+            mouseSize = 1
+        end
     end
 end
 
