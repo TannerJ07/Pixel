@@ -14,6 +14,8 @@ local types = {
     border = {}
 }
 
+-- begin particle definitions
+
 function MoveSand(smallGrid)
     local newGrid = EmptyGrid()
     local direction = 6-math.random(2)*2
@@ -93,6 +95,9 @@ function MoveSteam(smallGrid)
     return newGrid
 end
 
+--end particle definitions
+
+
 local elementTable = {
     air = nil,
     sand = MoveSand,
@@ -108,8 +113,35 @@ local elementColors = {
     water = {0,0,1},
     fire = {0.9,0.2,0},
     steam = {0.5,0.5,0.5},
-    border = {.8,0,1}
+    border = {.8,0,1},
+
+    --catagory colors
+    solid = {0.3,0.3,0.3},
+    liquid = {0,0,1},
+    gas = {0.9,0.9,0.9},
+    immovable = {0.8,0,1}
 }
+
+local categories = {"solid","liquid","gas","immovable"}
+local elements = {"air","fire","water","sand","border","steam"}
+
+local elementCategories = {
+    solid = {"sand"},
+    liquid = {"water"},
+    gas = {"aire","fire","steam"},
+    immovable = {"border"}
+}
+function GetElements()
+    return elements
+end
+
+function GetCategorys()
+    return categories
+end
+
+function GetElementCategory(catagory)
+    return elementCategories[catagory]
+end
 
 function GetColor(element)
     return elementColors[element]
@@ -124,10 +156,6 @@ function CheckNoRules(element)
     if elementTable[element]then
         return true
     end
-end
-
-function Immovable(grid)
-    return grid
 end
 
 function EmptyGrid()

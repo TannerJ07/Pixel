@@ -56,3 +56,39 @@ function  DrawGrid(grid,cellSize,elementColors)
         end
     end
 end
+
+function GetSelectorObjects()
+    local textObjects = {}
+    local categories = GetCategorys()
+    local font = love.graphics.getFont()
+    for i,v in ipairs(categories) do
+        textObjects[i] = love.graphics.newText(font,v:upper())
+    end
+    return textObjects
+end
+
+function CreateElementTexts()
+    local textObjexts = {}
+    local elements = GetElements()
+    for i=1,#elements do
+        textObjexts[i] = love.graphics.newText(font,elements[i]:upper())
+    end
+    return
+end
+
+function DrawSelector(screenWidth,screenHeight,textObjects,category)
+    local recWidth,recHeight = screenWidth/#textObjects-10,50
+    local categories = GetCategorys()
+    local elementCategories = GetElementCategory(category)
+    local width,height
+    for i,v in ipairs(textObjects) do
+        width  = v:getWidth()
+        height = v:getHeight()
+        love.graphics.setColor(GetColor(categories[i]))
+        love.graphics.rectangle("line",(i-1)/#textObjects*screenWidth+5,screenHeight+10,recWidth,recHeight,10)
+        love.graphics.draw(v,(i-1)/#textObjects*screenWidth+(recWidth-width)/2,screenHeight+(recHeight-height)/2+10)
+    end
+    --[[for i,v in elementCategories do
+        
+    end]]
+end

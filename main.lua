@@ -1,6 +1,6 @@
 local grid
 local cellSize = 10
-local screenWidth,screenHeight=love.graphics.getWidth(),love.graphics.getHeight()
+local screenWidth,screenHeight=love.graphics.getWidth(),love.graphics.getHeight()-200
 
 local gridWidth = math.floor(screenWidth/cellSize)
 local gridHeight = math.floor(screenHeight/cellSize)
@@ -9,12 +9,19 @@ local doMouse = 1
 local mouseSize = 1
 
 local element = "sand"
+local largeFont = love.graphics.setNewFont(20)
+local smallFont = love.graphics.setNewFont(12)
 
+local selectorObjects
 function love.load()
     require "grid-manager"
     require "particle-rules"
+    love.graphics.setDefaultFilter( "nearest" )
 
     grid = InitiateGrid(gridWidth,gridHeight,cellSize)
+    
+    love.graphics.setFont(largeFont)
+    selectorObjects = GetSelectorObjects()
 end
 
 function love.update()
@@ -26,7 +33,7 @@ function love.update()
 
         for i = 1,mouseSize do
             for j = 1,mouseSize do
-                if 2*mousex>=(-2*i+mouseSize+3)*cellSize and 2*mousex<2*screenWidth+(-2*i+mouseSize-1)*cellSize and 2*mousey>=(-2*j+mouseSize+3)*cellSize and 2*mousey<2*screenHeight+(-2*j+mouseSize-1)*cellSize then
+                if 2*mousex>=(-2*i+mouseSize+3)*cellSize and mousex*2<(gridWidth*2-i*2+mouseSize-1)*cellSize and 2*mousey>=(-2*j+mouseSize+3)*cellSize and mousey*2<(gridHeight*2-i*2+mouseSize-1)*cellSize then
                     grid[math.floor(mousex/cellSize-(mouseSize-1)/2)+i][math.floor(mousey/cellSize-(mouseSize-1)/2)+j]=element
                 end
             end
@@ -75,6 +82,8 @@ function love.draw()
 
 
     DrawGrid(grid,cellSize,elementColors)
+    DrawSelector(screenWidth,screenHeight,selectorObjects)
+    love.graphics.setFont(smallFont)
     love.graphics.setColor(1,1,1)
     love.graphics.print(love.timer.getFPS(),50,50)
     love.graphics.print("Size: "..mouseSize,100,50)
