@@ -1,4 +1,4 @@
-To open game (requires love2d from https://love2d.org/#download):
+To open game (requires [LÖVE](https://love2d.org/#download) to be downloaded):
 
 - Download zip file
 - Rename .zip to .love
