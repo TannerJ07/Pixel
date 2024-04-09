@@ -21,6 +21,7 @@ function MoveSand(smallGrid)
     local direction = 6-math.random(2)*2
     if types[smallGrid[5-direction][3]]["gas"] and types[smallGrid[2][3]]["liquid"] then
         newGrid[2][2] = smallGrid[5-direction][3]
+        newGrid[5-direction][3] = smallGrid[2][3]
         newGrid[2][3] = "sand"
     elseif types[smallGrid[2][3]]["liquid"] then
         newGrid[2][2] = smallGrid[2][3]
@@ -78,14 +79,14 @@ end
 function MoveSteam(smallGrid)
     local newGrid = EmptyGrid()
     if math.random() >= 0.02 then
-        if smallGrid[2][1] == "air" and math.random()>=0.33 then
-            newGrid[2][2] = "air"
+        if types[smallGrid[2][1]]["liquid"] and math.random()>=0.33 then
+            newGrid[2][2] = smallGrid[2][1]
             newGrid[2][1] = "steam"
         else
             local direction = math.random(2)*2
-            if smallGrid[5-direction][2] == "air" then
+            if types[smallGrid[5-direction][2]]["liquid"] then
                 newGrid[5-direction][2] = "steam"
-                newGrid[2][2] = "air"
+                newGrid[2][2] = smallGrid[5-direction][2]
             end
 
         end

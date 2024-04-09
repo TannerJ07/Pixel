@@ -35,7 +35,7 @@ function love.update()
 
         for i = 1,mouseSize do
             for j = 1,mouseSize do
-                if 2*mousex>=(-2*i+mouseSize+3)*cellSize and mousex*2<(gridWidth*2-i*2+mouseSize-1)*cellSize and 2*mousey>=(-2*j+mouseSize+3)*cellSize and mousey*2<(gridHeight*2-i*2+mouseSize-1)*cellSize then
+                if 2*mousex>=(-2*i+mouseSize+3)*cellSize and mousex*2<(gridWidth*2-i*2+mouseSize-1)*cellSize and 2*mousey>=(-2*j+mouseSize+3)*cellSize and mousey*2<2*screenHeight+(-2*j+mouseSize-1)*cellSize then
                     grid[math.floor(mousex/cellSize-(mouseSize-1)/2)+i][math.floor(mousey/cellSize-(mouseSize-1)/2)+j]=element
                 end
             end
@@ -54,7 +54,7 @@ function love.update()
     if love.mouse.isDown(2) then
         for i = 1,mouseSize do
             for j = 1,mouseSize do
-                if 2*mousex>=(-2*i+mouseSize+3)*cellSize and 2*mousex<2*screenWidth+(-2*i+mouseSize-1)*cellSize and 2*mousey>=(-2*j+mouseSize+3)*cellSize and 2*mousey<2*screenHeight+(-2*j+mouseSize-1)*cellSize then
+                if 2*mousex>=(-2*i+mouseSize+3)*cellSize and 2*mousex<2*screenWidth+(-2*i+mouseSize-1)*cellSize and 2*mousey>=(-2*j+mouseSize+3)*cellSize and mousey*2<2*screenHeight+(-2*j+mouseSize-1)*cellSize then
                     grid[math.floor(mousex/cellSize-(mouseSize-1)/2)+i][math.floor(mousey/cellSize-(mouseSize-1)/2)+j]="air"
                 end
             end
@@ -65,10 +65,10 @@ function love.update()
 end
 
 function love.keypressed(key)
-    local keyCodes = {"sand","water","fire","steam","border"}
+    --[[local keyCodes = {"sand","water","fire","steam","border"}
     if keyCodes[tonumber(key)] then
         element = keyCodes[tonumber(key)]
-    end
+    end]]
     if key == "=" then
         if love.keyboard.isDown("backspace") then
             mouseSize = mouseSize+5
