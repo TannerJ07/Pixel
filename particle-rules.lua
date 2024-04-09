@@ -113,7 +113,16 @@ local elementColors = {
     water = {0,0,1},
     fire = {0.9,0.2,0},
     steam = {0.5,0.5,0.5},
-    border = {.8,0,1},
+    border = {.8,0,1}
+}
+
+local displayColors = {
+    air = {1,1,1},
+    --[[sand = {.9,.7,.3},
+    water = {0,0,1},
+    fire = {0.9,0.2,0},
+    steam = {0.5,0.5,0.5},
+    border = {.8,0,1},]]
 
     --catagory colors
     solid = {0.3,0.3,0.3},
@@ -128,25 +137,32 @@ local elements = {"air","fire","water","sand","border","steam"}
 local elementCategories = {
     solid = {"sand"},
     liquid = {"water"},
-    gas = {"aire","fire","steam"},
+    gas = {"air","fire","steam"},
     immovable = {"border"}
 }
 function GetElements()
     return elements
 end
 
-function GetCategorys()
+function GetCategories()
     return categories
 end
 
-function GetElementCategory(catagory)
-    return elementCategories[catagory]
+function GetElementCategory(category)
+    return elementCategories[category]
 end
 
 function GetColor(element)
     return elementColors[element]
 end
 
+function GetDisplayColor(element)
+    if displayColors[element] then 
+        return displayColors[element]
+    else
+        return elementColors[element]
+    end
+end
 
 function MoveParticle(smallGrid)
     return elementTable[smallGrid[2][2]](smallGrid)

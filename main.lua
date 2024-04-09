@@ -9,19 +9,21 @@ local doMouse = 1
 local mouseSize = 1
 
 local element = "sand"
+local catagory = "gas"
 local largeFont = love.graphics.setNewFont(20)
 local smallFont = love.graphics.setNewFont(12)
-
 local selectorObjects
+local elementObjects
 function love.load()
     require "grid-manager"
     require "particle-rules"
     love.graphics.setDefaultFilter( "nearest" )
 
     grid = InitiateGrid(gridWidth,gridHeight,cellSize)
-    
+
     love.graphics.setFont(largeFont)
     selectorObjects = GetSelectorObjects()
+    elementObjects = CreateElementTexts()
 end
 
 function love.update()
@@ -81,8 +83,8 @@ end
 function love.draw()
 
 
-    DrawGrid(grid,cellSize,elementColors)
-    DrawSelector(screenWidth,screenHeight,selectorObjects)
+    DrawGrid(grid,cellSize)
+    DrawSelector(screenWidth,screenHeight,selectorObjects,elementObjects,catagory)
     love.graphics.setFont(smallFont)
     love.graphics.setColor(1,1,1)
     love.graphics.print(love.timer.getFPS(),50,50)

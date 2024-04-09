@@ -48,7 +48,7 @@ function UpdateGrid(grid)
 
 end
 
-function  DrawGrid(grid,cellSize,elementColors)
+function  DrawGrid(grid,cellSize)
     for i = 1,#grid do
         for j = 1,#grid[1] do
             love.graphics.setColor(GetColor(grid[i][j]))
@@ -59,7 +59,7 @@ end
 
 function GetSelectorObjects()
     local textObjects = {}
-    local categories = GetCategorys()
+    local categories = GetCategories()
     local font = love.graphics.getFont()
     for i,v in ipairs(categories) do
         textObjects[i] = love.graphics.newText(font,v:upper())
@@ -70,25 +70,33 @@ end
 function CreateElementTexts()
     local textObjexts = {}
     local elements = GetElements()
-    for i=1,#elements do
-        textObjexts[i] = love.graphics.newText(font,elements[i]:upper())
+    local font = love.graphics.getFont()
+    for i,v in ipairs(elements) do
+        textObjexts[v] = love.graphics.newText(font,v:upper())
     end
-    return
+    return textObjexts
 end
 
-function DrawSelector(screenWidth,screenHeight,textObjects,category)
+function DrawSelector(screenWidth,screenHeight,textObjects,elementObjects,category)
     local recWidth,recHeight = screenWidth/#textObjects-10,50
-    local categories = GetCategorys()
+    local categories = GetCategories()
     local elementCategories = GetElementCategory(category)
     local width,height
     for i,v in ipairs(textObjects) do
         width  = v:getWidth()
         height = v:getHeight()
-        love.graphics.setColor(GetColor(categories[i]))
-        love.graphics.rectangle("line",(i-1)/#textObjects*screenWidth+5,screenHeight+10,recWidth,recHeight,10)
+        love.graphics.setColor(GetDisplayColor(categories[i]))
+        love.graphics.rectangle("line",(i-1)/#textObjects*screenWidth+5,screenHeight+10,recWidth,recHeight,2)
         love.graphics.draw(v,(i-1)/#textObjects*screenWidth+(recWidth-width)/2,screenHeight+(recHeight-height)/2+10)
     end
-    --[[for i,v in elementCategories do
-        
-    end]]
+    recWidth,recHeight = 100,50
+    local v
+    for i,k in ipairs(elementCategories) do
+        v = elementObjects[k]
+        width  = v:getWidth()
+        height = v:getHeight()
+        love.graphics.setColor(GetDisplayColor(k))
+        love.graphics.rectangle("line",(i-1)*recWidth+screenWidth/2-recWidth/2*#elementCategories,screenHeight+80,recWidth,recHeight,10)
+        love.graphics.draw(v,(i-1)*recWidth+screenWidth/2-recWidth/2*#elementCategories,screenHeight+(recHeight-height)/2+80)
+    end
 end
