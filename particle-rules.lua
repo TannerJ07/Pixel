@@ -125,7 +125,7 @@ local displayColors = {
     border = {.8,0,1},]]
 
     --catagory colors
-    solid = {0.5,0.5,0.5},
+    solid = {0.3,0.3,0.3},
     liquid = {0,0,1},
     gas = {0.9,0.9,0.9},
     immovable = {0.8,0,1}

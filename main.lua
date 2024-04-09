@@ -1,6 +1,6 @@
 local grid
 local cellSize = 10
-local screenWidth,screenHeight=love.graphics.getWidth(),love.graphics.getHeight()-150
+local screenWidth,screenHeight=love.graphics.getWidth(),love.graphics.getHeight()-200
 
 local gridWidth = math.floor(screenWidth/cellSize)
 local gridHeight = math.floor(screenHeight/cellSize)
@@ -9,7 +9,7 @@ local doMouse = 1
 local mouseSize = 1
 
 local element = "sand"
-local catagory = "solid"
+local catagory = "gas"
 local largeFont = love.graphics.setNewFont(20)
 local smallFont = love.graphics.setNewFont(12)
 local selectorObjects
@@ -19,7 +19,7 @@ function love.load()
     require "particle-rules"
     love.graphics.setDefaultFilter( "nearest" )
 
-    grid = InitiateGrid(gridWidth,gridHeight)
+    grid = InitiateGrid(gridWidth,gridHeight,cellSize)
 
     love.graphics.setFont(largeFont)
     selectorObjects = GetSelectorObjects()
@@ -40,13 +40,6 @@ function love.update()
                 end
             end
         end
-        if mousey > gridHeight*cellSize then
-            if mousey > gridHeight*cellSize+50 then
-                element = SelectElement(mousex,screenWidth,catagory,element)
-            else
-                catagory = SelectCategory(mousex,screenWidth,catagory)
-            end
-        end
         doMouse = 0
     else
         doMouse = 1
@@ -61,7 +54,6 @@ function love.update()
         end
 
     end
-    
 end
 
 function love.keypressed(key)
@@ -92,7 +84,7 @@ function love.draw()
 
 
     DrawGrid(grid,cellSize)
-    DrawSelector(screenWidth,screenHeight,selectorObjects,elementObjects,catagory,element)
+    DrawSelector(screenWidth,screenHeight,selectorObjects,elementObjects,catagory)
     love.graphics.setFont(smallFont)
     love.graphics.setColor(1,1,1)
     love.graphics.print(love.timer.getFPS(),50,50)
