@@ -1,5 +1,5 @@
 #special
-*.json
+*.vscode
 
 # Compiled Lua sources
 luac.out
