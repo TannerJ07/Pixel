@@ -1,4 +1,4 @@
-function InitiateGrid(width,height,cellSize)
+function InitiateGrid(width,height)
     local grid = {}
     for i = 1,width do
         grid[i] = {}
@@ -77,14 +77,19 @@ function CreateElementTexts()
     return textObjexts
 end
 
-function DrawSelector(screenWidth,screenHeight,textObjects,elementObjects,category)
+function DrawSelector(screenWidth,screenHeight,textObjects,elementObjects,category,element)
     local recWidth,recHeight = screenWidth/#textObjects-10,50
     local categories = GetCategories()
     local elementCategories = GetElementCategory(category)
     local width,height
+    local elements = GetElements()
     for i,v in ipairs(textObjects) do
         width  = v:getWidth()
         height = v:getHeight()
+        if categories[i] == category then
+            love.graphics.setColor(math.sqrt(GetDisplayColor(categories[i])[1]),math.sqrt(GetDisplayColor(categories[i])[2]),math.sqrt(GetDisplayColor(categories[i])[3]),0.3)
+            love.graphics.rectangle("fill",(i-1)/#textObjects*screenWidth+5,screenHeight+10,recWidth,recHeight,2)
+        end
         love.graphics.setColor(GetDisplayColor(categories[i]))
         love.graphics.rectangle("line",(i-1)/#textObjects*screenWidth+5,screenHeight+10,recWidth,recHeight,2)
         love.graphics.draw(v,(i-1)/#textObjects*screenWidth+(recWidth-width)/2,screenHeight+(recHeight-height)/2+10)
@@ -95,8 +100,31 @@ function DrawSelector(screenWidth,screenHeight,textObjects,elementObjects,catego
         v = elementObjects[k]
         width  = v:getWidth()
         height = v:getHeight()
+        if k == element then
+            love.graphics.setColor(math.sqrt(GetDisplayColor(k)[1]),math.sqrt(GetDisplayColor(k)[2]),math.sqrt(GetDisplayColor(k)[3]),0.3)
+            love.graphics.rectangle("fill",(i-1)*(recWidth+10)+screenWidth/2-(recWidth+10)/2*#elementCategories,screenHeight+80,recWidth,recHeight,10)
+        end
         love.graphics.setColor(GetDisplayColor(k))
-        love.graphics.rectangle("line",(i-1)*recWidth+screenWidth/2-recWidth/2*#elementCategories,screenHeight+80,recWidth,recHeight,10)
-        love.graphics.draw(v,(i-1)*recWidth+screenWidth/2-recWidth/2*#elementCategories,screenHeight+(recHeight-height)/2+80)
+        love.graphics.rectangle("line",(i-1)*(recWidth+10)+screenWidth/2-(recWidth+10)/2*#elementCategories,screenHeight+80,recWidth,recHeight,10)
+        love.graphics.draw(v,(i-1)*(recWidth+10)+screenWidth/2-(recWidth+10)/2*#elementCategories+(recWidth-width)/2,screenHeight+(recHeight-height)/2+80)
     end
+end
+
+function SelectCategory(mousex,screenWidth,category)
+    local categories = GetCategories()
+    local newCategory = math.floor((mousex-2)/screenWidth*#categories+1)
+    if newCategory >= 1 and newCategory <= #categories then
+        return categories[newCategory]
+    end
+    return category
+end
+
+function SelectElement(mousex,screenWidth,category,element)
+    local elementCategories = GetElementCategory(category)
+    local recWidth = 100
+    local newElement=math.floor((mousex-screenWidth/2+(recWidth+10)/2*#elementCategories)/(recWidth+10)+1)
+    if newElement>=1 and newElement<=#elementCategories then
+        return elementCategories[newElement]
+    end
+    return element
 end
